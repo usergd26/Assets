@@ -81,6 +81,7 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapAuthenticationEndpoints();
+app.MapAssetEndpoints();
 
 
 // Configure the HTTP request pipeline.
