@@ -63,6 +63,21 @@ namespace Assets.API.Endpoints
                     .ToListAsync();
                 return Results.Ok(assets);
             }).WithTags(endpointGroup);
+
+            app.MapGet("/assets/by-type/{assetTypeId:int}", async ([FromServices] AppDbContext db, int assetTypeId) =>
+            {
+                var assets = await db.Assets
+                    .Where(a => a.AssetTypeId == assetTypeId)
+                    .Select(a => new AssetDto
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        AssetTypeId = a.AssetTypeId
+                    })
+                    .ToListAsync();
+
+                return Results.Ok(assets);
+            }).WithTags(endpointGroup);
         }
     }
 }
