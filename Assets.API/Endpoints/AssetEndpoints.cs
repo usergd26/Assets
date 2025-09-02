@@ -42,7 +42,7 @@ namespace Assets.API.Endpoints
                 if (!assetTypeExists)
                     return Results.BadRequest("AssetTypeId does not exist.");
 
-                var asset = new Asset { Name = dto.Name, AssetTypeId = dto.AssetTypeId };
+                var asset = new Asset { Name = dto.Name, AssetTypeId = dto.AssetTypeId, Description = dto.Description, ModelNo = dto.ModelNo, Location = dto.Location, Status = dto.Status };
                 db.Assets.Add(asset);
                 await db.SaveChangesAsync();
                 dto.Id = asset.Id;
@@ -58,7 +58,11 @@ namespace Assets.API.Endpoints
                     {
                         Id = a.Id,
                         Name = a.Name,
-                        AssetTypeId = a.AssetTypeId
+                        AssetTypeId = a.AssetTypeId,
+                        Status = a.Status,
+                        Description = a.Description,
+                        Location = a.Location,
+                        ModelNo = a.ModelNo
                     })
                     .ToListAsync();
                 return Results.Ok(assets);
@@ -72,7 +76,11 @@ namespace Assets.API.Endpoints
                     {
                         Id = a.Id,
                         Name = a.Name,
-                        AssetTypeId = a.AssetTypeId
+                        AssetTypeId = a.AssetTypeId,
+                        ModelNo = a.ModelNo,
+                        Location = a.Location,
+                        Description = a.Description,
+                        Status = a.Status
                     })
                     .ToListAsync();
 

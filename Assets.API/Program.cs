@@ -7,6 +7,18 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:8080", "https://assetmanagementt.netlify.app") // your React app URL
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials(); // only if using cookies/auth
+        });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -58,6 +70,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
+
 
 using (var scope = app.Services.CreateScope())
 {
